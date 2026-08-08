@@ -1,9 +1,0 @@
-﻿spring:
-  profiles: dev
-  datasource:
-    url: jdbc:postgresql://localhost:5432/platform_account_db
-    username: platform_account_user
-    password: platform_account_password
-security:
-  jwt:
-    secret: dev-jwt-secret

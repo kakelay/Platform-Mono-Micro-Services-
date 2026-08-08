@@ -1,0 +1,412 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "${POSTGRES_PORT}:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - platform-net
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - platform-net
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.4.0
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    ports:
+      - "2181:2181"
+    healthcheck:
+      test:
+        ["CMD-SHELL", "printf 'srvr\n' | nc localhost 2181 | grep -q 'Mode:'"]
+      interval: 10s
+      timeout: 10s
+      start_period: 20s
+      retries: 5
+    networks:
+      - platform-net
+
+  kafka:
+    image: confluentinc/cp-kafka:7.4.0
+    container_name: kafka
+    env_file:
+      - .env
+    environment:
+      KAFKA_BROKER_ID: ${KAFKA_BROKER_ID}
+      KAFKA_ZOOKEEPER_CONNECT: ${KAFKA_ZOOKEEPER_CONNECT}
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: ${KAFKA_ADVERTISED_LISTENERS}
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: ${KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR}
+    ports:
+      - "9092:9092"
+    volumes:
+      - kafka-data:/var/lib/kafka/data
+    depends_on:
+      - zookeeper
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "kafka-broker-api-versions --bootstrap-server localhost:9092 >/dev/null 2>&1",
+        ]
+      interval: 10s
+      timeout: 10s
+      start_period: 30s
+      retries: 10
+    networks:
+      - platform-net
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "${PROMETHEUS_PORT}:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    # Prometheus does not depend on application services for infra startup
+    networks:
+      - platform-net
+
+  grafana:
+    image: grafana/grafana:10.1.2
+    container_name: grafana
+    ports:
+      - "${GRAFANA_PORT}:3000"
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_SECURITY_ADMIN_USER: admin
+      GF_INSTALL_PLUGINS: grafana-piechart-panel
+      GF_SERVER_ROOT_URL: "%(protocol)s://%(domain)s:%(http_port)s"
+      GF_AUTH_ANONYMOUS_ENABLED: "false"
+      GF_PATHS_PROVISIONING: /etc/grafana/provisioning
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+    depends_on:
+      - prometheus
+    networks:
+      - platform-net
+
+  config-service:
+    build:
+      context: ../..
+      dockerfile: config-service/Dockerfile
+    container_name: config-service
+    env_file:
+      - .env
+    environment:
+      SPRING_CLOUD_CONFIG_URI: http://config-service:8888
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+    ports:
+      - "8888:8888"
+    networks:
+      - platform-net
+
+  discovery-service:
+    build:
+      context: ../..
+      dockerfile: discovery-service/Dockerfile
+    container_name: discovery-service
+    env_file:
+      - .env
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+    ports:
+      - "8761:8761"
+    depends_on:
+      - config-service
+    networks:
+      - platform-net
+
+  gateway-service:
+    build:
+      context: ../..
+      dockerfile: gateway-service/Dockerfile
+    container_name: gateway-service
+    env_file:
+      - .env
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+      SPRING_CLOUD_CONFIG_URI: http://config-service:8888
+      REDIS_HOST: redis
+    ports:
+      - "8080:8080"
+    depends_on:
+      - discovery-service
+      - config-service
+      - redis
+    networks:
+      - platform-net
+
+  auth-service:
+    build:
+      context: ../..
+      dockerfile: auth-service/Dockerfile
+    container_name: auth-service
+    env_file:
+      - .env
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      REDIS_HOST: redis
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+      SPRING_CLOUD_CONFIG_URI: http://config-service:8888
+    ports:
+      - "8081:8081"
+    depends_on:
+      - discovery-service
+      - config-service
+      - postgres
+    networks:
+      - platform-net
+
+  user-service:
+    build:
+      context: ../..
+      dockerfile: user-service/Dockerfile
+    container_name: user-service
+    env_file:
+      - .env
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      REDIS_HOST: redis
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+      SPRING_CLOUD_CONFIG_URI: http://config-service:8888
+    ports:
+      - "8082:8082"
+    depends_on:
+      - discovery-service
+      - config-service
+      - postgres
+      - redis
+    networks:
+      - platform-net
+
+  customer-service:
+    build:
+      context: ../..
+      dockerfile: customer-service/Dockerfile
+    container_name: customer-service
+    env_file:
+      - .env
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+      SPRING_CLOUD_CONFIG_URI: http://config-service:8888
+    ports:
+      - "8083:8083"
+    depends_on:
+      - discovery-service
+      - config-service
+      - postgres
+    networks:
+      - platform-net
+
+  account-service:
+    build:
+      context: ../..
+      dockerfile: account-service/Dockerfile
+    container_name: account-service
+    env_file:
+      - .env
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+      SPRING_CLOUD_CONFIG_URI: http://config-service:8888
+    ports:
+      - "8084:8084"
+    depends_on:
+      - discovery-service
+      - config-service
+      - postgres
+    networks:
+      - platform-net
+
+  transaction-service:
+    build:
+      context: ../..
+      dockerfile: transaction-service/Dockerfile
+    container_name: transaction-service
+    env_file:
+      - .env
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+      SPRING_CLOUD_CONFIG_URI: http://config-service:8888
+    ports:
+      - "8085:8085"
+    depends_on:
+      - discovery-service
+      - config-service
+      - postgres
+    networks:
+      - platform-net
+
+  order-service:
+    build:
+      context: ../..
+      dockerfile: order-service/Dockerfile
+    container_name: order-service
+    env_file:
+      - .env
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+      SPRING_CLOUD_CONFIG_URI: http://config-service:8888
+    ports:
+      - "8086:8086"
+    depends_on:
+      - discovery-service
+      - config-service
+      - postgres
+    networks:
+      - platform-net
+
+  payment-service:
+    build:
+      context: ../..
+      dockerfile: payment-service/Dockerfile
+    container_name: payment-service
+    env_file:
+      - .env
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+      SPRING_CLOUD_CONFIG_URI: http://config-service:8888
+    ports:
+      - "8087:8087"
+    depends_on:
+      - discovery-service
+      - config-service
+      - postgres
+    networks:
+      - platform-net
+
+  notification-service:
+    build:
+      context: ../..
+      dockerfile: notification-service/Dockerfile
+    container_name: notification-service
+    env_file:
+      - .env
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+      SPRING_CLOUD_CONFIG_URI: http://config-service:8888
+    ports:
+      - "8088:8088"
+    depends_on:
+      - discovery-service
+      - config-service
+      - postgres
+    networks:
+      - platform-net
+
+  document-service:
+    build:
+      context: ../..
+      dockerfile: document-service/Dockerfile
+    container_name: document-service
+    env_file:
+      - .env
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+      SPRING_CLOUD_CONFIG_URI: http://config-service:8888
+    ports:
+      - "8089:8089"
+    depends_on:
+      - discovery-service
+      - config-service
+      - postgres
+    networks:
+      - platform-net
+
+  audit-service:
+    build:
+      context: ../..
+      dockerfile: audit-service/Dockerfile
+    container_name: audit-service
+    env_file:
+      - .env
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+      SPRING_CLOUD_CONFIG_URI: http://config-service:8888
+    ports:
+      - "8090:8090"
+    depends_on:
+      - discovery-service
+      - config-service
+      - postgres
+    networks:
+      - platform-net
+
+  reporting-service:
+    build:
+      context: ../..
+      dockerfile: reporting-service/Dockerfile
+    container_name: reporting-service
+    env_file:
+      - .env
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
+      SPRING_CLOUD_CONFIG_URI: http://config-service:8888
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
+    ports:
+      - "8091:8091"
+    depends_on:
+      - discovery-service
+      - config-service
+      - postgres
+      - kafka
+    networks:
+      - platform-net
+
+networks:
+  platform-net:
+    driver: bridge
+
+volumes:
+  postgres-data:
+  redis-data:
+  kafka-data:
+  grafana-data:

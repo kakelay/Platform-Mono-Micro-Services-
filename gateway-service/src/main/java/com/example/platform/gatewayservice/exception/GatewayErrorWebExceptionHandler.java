@@ -7,6 +7,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.codec.json.Jackson2JsonEncoder;
+import org.springframework.core.ResolvableType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.server.ServerResponse;
@@ -36,11 +37,11 @@ public class GatewayErrorWebExceptionHandler implements ErrorWebExceptionHandler
                 "message", ex.getMessage(),
                 "data", null,
                 "timestamp", OffsetDateTime.now().toString(),
-                "traceId", exchange.getRequest().getHeaders().getFirst("X-Trace-Id")
-        );
+                "traceId", exchange.getRequest().getHeaders().getFirst("X-Trace-Id"));
 
         return response.writeWith(Mono.just(response.bufferFactory().wrap(new Jackson2JsonEncoder()
-                .encodeValue(body, response.bufferFactory(), MediaType.APPLICATION_JSON, null)
+                .encodeValue(body, response.bufferFactory(), ResolvableType.forInstance(body),
+                        MediaType.APPLICATION_JSON, Map.of())
                 .asByteBuffer())));
     }
 }
