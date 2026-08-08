@@ -1,0 +1,9 @@
+D:\ISTAD\Platform-Mono-Micro-Services-\audit-service\src\main\java\com\example\platform\auditservice\controller\AuditController.java
+D:\ISTAD\Platform-Mono-Micro-Services-\audit-service\src\main\java\com\example\platform\auditservice\AuditServiceApplication.java
+D:\ISTAD\Platform-Mono-Micro-Services-\audit-service\src\main\java\com\example\platform\auditservice\service\impl\AuditServiceImpl.java
+D:\ISTAD\Platform-Mono-Micro-Services-\audit-service\src\main\java\com\example\platform\auditservice\repository\AuditEventRepository.java
+D:\ISTAD\Platform-Mono-Micro-Services-\audit-service\src\main\java\com\example\platform\auditservice\service\AuditService.java
+D:\ISTAD\Platform-Mono-Micro-Services-\audit-service\src\main\java\com\example\platform\auditservice\dto\request\CreateAuditEventRequest.java
+D:\ISTAD\Platform-Mono-Micro-Services-\audit-service\src\main\java\com\example\platform\auditservice\dto\response\AuditEventResponse.java
+D:\ISTAD\Platform-Mono-Micro-Services-\audit-service\src\main\java\com\example\platform\auditservice\entity\AuditEventEntity.java
+D:\ISTAD\Platform-Mono-Micro-Services-\audit-service\src\main\java\com\example\platform\auditservice\config\ResourceServerConfig.java

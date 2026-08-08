@@ -1,0 +1,10 @@
+com\example\platform\documentservice\DocumentServiceApplication.class
+com\example\platform\documentservice\service\impl\DocumentServiceImpl.class
+com\example\platform\documentservice\dto\request\CreateDocumentRequest.class
+com\example\platform\documentservice\config\ResourceServerConfig.class
+com\example\platform\documentservice\controller\DocumentController.class
+com\example\platform\documentservice\dto\response\DocumentResponse.class
+com\example\platform\documentservice\dto\request\UpdateDocumentRequest.class
+com\example\platform\documentservice\repository\DocumentRepository.class
+com\example\platform\documentservice\entity\DocumentEntity.class
+com\example\platform\documentservice\service\DocumentService.class

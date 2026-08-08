@@ -1,0 +1,6 @@
+com\example\platform\gatewayservice\filter\GatewayLoggingFilter.class
+com\example\platform\gatewayservice\config\GatewayConfig.class
+com\example\platform\gatewayservice\filter\CorrelationIdFilter.class
+com\example\platform\gatewayservice\security\GatewaySecurityConfig.class
+com\example\platform\gatewayservice\exception\GatewayErrorWebExceptionHandler.class
+com\example\platform\gatewayservice\GatewayServiceApplication.class

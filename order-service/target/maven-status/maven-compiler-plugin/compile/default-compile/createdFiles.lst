@@ -1,0 +1,11 @@
+com\example\platform\orderservice\entity\OrderEntity.class
+com\example\platform\orderservice\dto\request\CreateOrderRequest.class
+com\example\platform\orderservice\dto\response\OrderResponse.class
+com\example\platform\orderservice\OrderServiceApplication.class
+com\example\platform\orderservice\service\OrderService.class
+com\example\platform\orderservice\exception\GlobalExceptionHandler.class
+com\example\platform\orderservice\config\ResourceServerConfig.class
+com\example\platform\orderservice\repository\OrderRepository.class
+com\example\platform\orderservice\dto\request\UpdateOrderRequest.class
+com\example\platform\orderservice\service\impl\OrderServiceImpl.class
+com\example\platform\orderservice\controller\OrderController.class

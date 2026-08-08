@@ -1,0 +1,5 @@
+﻿spring:
+  profiles: uat
+  cloud:
+    config:
+      uri: ${CONFIG_SERVER_URI:http://config-service:8888}

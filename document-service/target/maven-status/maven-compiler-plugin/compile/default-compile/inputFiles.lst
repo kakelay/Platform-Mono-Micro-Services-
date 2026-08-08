@@ -1,0 +1,10 @@
+D:\ISTAD\Platform-Mono-Micro-Services-\document-service\src\main\java\com\example\platform\documentservice\entity\DocumentEntity.java
+D:\ISTAD\Platform-Mono-Micro-Services-\document-service\src\main\java\com\example\platform\documentservice\dto\request\CreateDocumentRequest.java
+D:\ISTAD\Platform-Mono-Micro-Services-\document-service\src\main\java\com\example\platform\documentservice\dto\response\DocumentResponse.java
+D:\ISTAD\Platform-Mono-Micro-Services-\document-service\src\main\java\com\example\platform\documentservice\service\DocumentService.java
+D:\ISTAD\Platform-Mono-Micro-Services-\document-service\src\main\java\com\example\platform\documentservice\repository\DocumentRepository.java
+D:\ISTAD\Platform-Mono-Micro-Services-\document-service\src\main\java\com\example\platform\documentservice\controller\DocumentController.java
+D:\ISTAD\Platform-Mono-Micro-Services-\document-service\src\main\java\com\example\platform\documentservice\DocumentServiceApplication.java
+D:\ISTAD\Platform-Mono-Micro-Services-\document-service\src\main\java\com\example\platform\documentservice\dto\request\UpdateDocumentRequest.java
+D:\ISTAD\Platform-Mono-Micro-Services-\document-service\src\main\java\com\example\platform\documentservice\service\impl\DocumentServiceImpl.java
+D:\ISTAD\Platform-Mono-Micro-Services-\document-service\src\main\java\com\example\platform\documentservice\config\ResourceServerConfig.java

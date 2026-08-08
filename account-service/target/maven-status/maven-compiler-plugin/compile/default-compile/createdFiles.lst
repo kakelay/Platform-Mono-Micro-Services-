@@ -1,0 +1,11 @@
+com\example\platform\accountservice\controller\AccountController.class
+com\example\platform\accountservice\config\ResourceServerConfig.class
+com\example\platform\accountservice\dto\request\UpdateAccountRequest.class
+com\example\platform\accountservice\dto\request\CreateAccountRequest.class
+com\example\platform\accountservice\repository\AccountRepository.class
+com\example\platform\accountservice\AccountServiceApplication.class
+com\example\platform\accountservice\entity\AccountEntity.class
+com\example\platform\accountservice\service\AccountService.class
+com\example\platform\accountservice\dto\response\AccountResponse.class
+com\example\platform\accountservice\service\impl\AccountServiceImpl.class
+com\example\platform\accountservice\exception\GlobalExceptionHandler.class

@@ -1,0 +1,9 @@
+com\example\platform\auditservice\AuditServiceApplication.class
+com\example\platform\auditservice\service\impl\AuditServiceImpl.class
+com\example\platform\auditservice\controller\AuditController.class
+com\example\platform\auditservice\dto\request\CreateAuditEventRequest.class
+com\example\platform\auditservice\config\ResourceServerConfig.class
+com\example\platform\auditservice\entity\AuditEventEntity.class
+com\example\platform\auditservice\service\AuditService.class
+com\example\platform\auditservice\repository\AuditEventRepository.class
+com\example\platform\auditservice\dto\response\AuditEventResponse.class

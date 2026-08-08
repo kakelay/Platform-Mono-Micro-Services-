@@ -1,0 +1,9 @@
+﻿spring:
+  profiles: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5432/platform_notification_db
+    username: platform_notification_user
+    password: platform_notification_password
+security:
+  jwt:
+    secret: dev-jwt-secret

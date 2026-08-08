@@ -1,0 +1,11 @@
+com\example\platform\userservice\controller\UserProfileController.class
+com\example\platform\userservice\repository\UserProfileRepository.class
+com\example\platform\userservice\config\ResourceServerConfig.class
+com\example\platform\userservice\dto\request\UpdateUserProfileRequest.class
+com\example\platform\userservice\UserServiceApplication.class
+com\example\platform\userservice\dto\request\CreateUserProfileRequest.class
+com\example\platform\userservice\service\UserProfileService.class
+com\example\platform\userservice\entity\UserProfileEntity.class
+com\example\platform\userservice\service\impl\UserProfileServiceImpl.class
+com\example\platform\userservice\dto\response\UserProfileResponse.class
+com\example\platform\userservice\exception\GlobalExceptionHandler.class

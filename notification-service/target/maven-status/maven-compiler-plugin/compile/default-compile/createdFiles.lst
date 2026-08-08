@@ -1,0 +1,10 @@
+com\example\platform\notificationservice\NotificationServiceApplication.class
+com\example\platform\notificationservice\service\NotificationService.class
+com\example\platform\notificationservice\entity\NotificationEntity.class
+com\example\platform\notificationservice\dto\response\NotificationResponse.class
+com\example\platform\notificationservice\controller\NotificationController.class
+com\example\platform\notificationservice\dto\request\UpdateNotificationRequest.class
+com\example\platform\notificationservice\service\impl\NotificationServiceImpl.class
+com\example\platform\notificationservice\config\ResourceServerConfig.class
+com\example\platform\notificationservice\dto\request\CreateNotificationRequest.class
+com\example\platform\notificationservice\repository\NotificationRepository.class

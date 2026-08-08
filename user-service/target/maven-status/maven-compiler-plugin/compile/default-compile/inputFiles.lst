@@ -1,0 +1,11 @@
+D:\ISTAD\Platform-Mono-Micro-Services-\user-service\src\main\java\com\example\platform\userservice\entity\UserProfileEntity.java
+D:\ISTAD\Platform-Mono-Micro-Services-\user-service\src\main\java\com\example\platform\userservice\UserServiceApplication.java
+D:\ISTAD\Platform-Mono-Micro-Services-\user-service\src\main\java\com\example\platform\userservice\repository\UserProfileRepository.java
+D:\ISTAD\Platform-Mono-Micro-Services-\user-service\src\main\java\com\example\platform\userservice\service\impl\UserProfileServiceImpl.java
+D:\ISTAD\Platform-Mono-Micro-Services-\user-service\src\main\java\com\example\platform\userservice\dto\response\UserProfileResponse.java
+D:\ISTAD\Platform-Mono-Micro-Services-\user-service\src\main\java\com\example\platform\userservice\config\ResourceServerConfig.java
+D:\ISTAD\Platform-Mono-Micro-Services-\user-service\src\main\java\com\example\platform\userservice\dto\request\UpdateUserProfileRequest.java
+D:\ISTAD\Platform-Mono-Micro-Services-\user-service\src\main\java\com\example\platform\userservice\controller\UserProfileController.java
+D:\ISTAD\Platform-Mono-Micro-Services-\user-service\src\main\java\com\example\platform\userservice\dto\request\CreateUserProfileRequest.java
+D:\ISTAD\Platform-Mono-Micro-Services-\user-service\src\main\java\com\example\platform\userservice\exception\GlobalExceptionHandler.java
+D:\ISTAD\Platform-Mono-Micro-Services-\user-service\src\main\java\com\example\platform\userservice\service\UserProfileService.java

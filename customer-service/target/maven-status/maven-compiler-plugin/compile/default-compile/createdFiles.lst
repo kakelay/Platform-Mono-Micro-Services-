@@ -1,0 +1,17 @@
+com\example\platform\customerservice\entity\CustomerAddressEntity.class
+com\example\platform\customerservice\CustomerServiceApplication.class
+com\example\platform\customerservice\dto\request\CreateCustomerRequest$CustomerContact.class
+com\example\platform\customerservice\dto\request\CreateCustomerRequest.class
+com\example\platform\customerservice\dto\request\UpdateCustomerRequest.class
+com\example\platform\customerservice\dto\response\CustomerResponse$CustomerContact.class
+com\example\platform\customerservice\config\ResourceServerConfig.class
+com\example\platform\customerservice\service\CustomerService.class
+com\example\platform\customerservice\dto\request\CreateCustomerRequest$CustomerAddress.class
+com\example\platform\customerservice\controller\CustomerController.class
+com\example\platform\customerservice\entity\CustomerEntity.class
+com\example\platform\customerservice\service\impl\CustomerServiceImpl.class
+com\example\platform\customerservice\exception\GlobalExceptionHandler.class
+com\example\platform\customerservice\repository\CustomerRepository.class
+com\example\platform\customerservice\dto\response\CustomerResponse.class
+com\example\platform\customerservice\dto\response\CustomerResponse$CustomerAddress.class
+com\example\platform\customerservice\entity\CustomerContactEntity.class
