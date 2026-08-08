@@ -1,0 +1,15 @@
+﻿spring:
+  profiles: uat
+  redis:
+    host: ${REDIS_HOST:redis}
+    port: ${REDIS_PORT:6379}
+  cloud:
+    discovery:
+      enabled: true
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://discovery-service:8761/eureka/}
+security:
+  jwt:
+    secret: ${SECURITY_JWT_SECRET:uat-secret-key-uat-secret-key}

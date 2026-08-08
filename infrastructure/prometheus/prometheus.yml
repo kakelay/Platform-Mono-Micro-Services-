@@ -1,0 +1,31 @@
+﻿global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'spring-boot-actuator'
+    metrics_path: '/actuator/prometheus'
+    scheme: http
+    static_configs:
+      - targets:
+          - 'gateway-service:8080'
+          - 'auth-service:8081'
+          - 'user-service:8082'
+          - 'customer-service:8083'
+          - 'account-service:8084'
+          - 'transaction-service:8085'
+          - 'payment-service:8086'
+          - 'order-service:8087'
+          - 'notification-service:8088'
+          - 'document-service:8089'
+          - 'audit-service:8090'
+          - 'reporting-service:8091'
+
+  - job_name: 'kafka'
+    metrics_path: '/metrics'
+    static_configs:
+      - targets: ['kafka:9308']

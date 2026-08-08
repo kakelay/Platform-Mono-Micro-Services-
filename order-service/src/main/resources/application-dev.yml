@@ -1,0 +1,9 @@
+﻿spring:
+  profiles: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5432/platform_order_db
+    username: platform_order_user
+    password: platform_order_password
+security:
+  jwt:
+    secret: dev-jwt-secret

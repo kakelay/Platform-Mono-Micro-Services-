@@ -1,0 +1,3 @@
+com\example\platform\common\model\ApiResponse.class
+com\example\platform\common\model\CorrelationContext.class
+com\example\platform\common\model\IntegrationEvent.class

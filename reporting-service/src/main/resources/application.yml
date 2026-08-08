@@ -1,0 +1,47 @@
+server:
+  port: 8091
+spring:
+  application:
+    name: reporting-service
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/platform_reporting_db
+    username: ${DB_USERNAME:platform_reporting_user}
+    password: ${DB_PASSWORD:platform_reporting_password}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        format_sql: true
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: true
+  kafka:
+    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    consumer:
+      group-id: reporting-service-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: com.example.platform.reportingservice.event
+        spring.json.use.type.headers: false
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_CLIENT_SERVICEURL_DEFAULTZONE:http://discovery-service:8761/eureka/}
+    register-with-eureka: true
+    fetch-registry: true
+security:
+  jwt:
+    secret: ${SECURITY_JWT_SECRET:default-jwt-secret-key-default-jwt-secret-key}

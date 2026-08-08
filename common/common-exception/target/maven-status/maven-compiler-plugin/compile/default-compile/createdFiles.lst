@@ -1,0 +1,5 @@
+com\example\platform\common\exception\ErrorResponse.class
+com\example\platform\common\exception\ResourceNotFoundException.class
+com\example\platform\common\exception\BusinessException.class
+com\example\platform\common\exception\BaseException.class
+com\example\platform\common\exception\ValidationException.class
