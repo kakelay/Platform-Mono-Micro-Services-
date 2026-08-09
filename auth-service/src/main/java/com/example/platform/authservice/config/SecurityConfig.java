@@ -12,11 +12,16 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import javax.crypto.spec.SecretKeySpec;
 import javax.crypto.SecretKey;
+
+import com.nimbusds.jose.proc.SecurityContext;
+import com.nimbusds.jose.jwk.source.ImmutableSecret;
 
 @Configuration
 @EnableMethodSecurity
@@ -48,6 +53,12 @@ public class SecurityConfig {
     public JwtDecoder jwtDecoder() {
         SecretKey secretKey = new SecretKeySpec(jwtSecret.getBytes(), "HmacSHA256");
         return NimbusJwtDecoder.withSecretKey(secretKey).build();
+    }
+
+    @Bean
+    public JwtEncoder jwtEncoder() {
+        SecretKey secretKey = new SecretKeySpec(jwtSecret.getBytes(), "HmacSHA256");
+        return new NimbusJwtEncoder(new ImmutableSecret<SecurityContext>(secretKey));
     }
 
     @Bean

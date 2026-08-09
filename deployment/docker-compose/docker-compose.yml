@@ -173,17 +173,23 @@ services:
     env_file:
       - .env
     environment:
-      DB_HOST: postgres
-      DB_PORT: 5432
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
       REDIS_HOST: redis
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
       SPRING_CLOUD_CONFIG_URI: http://config-service:8888
     ports:
       - "8081:8081"
     depends_on:
-      - discovery-service
-      - config-service
-      - postgres
+      discovery-service:
+        condition: service_started
+      config-service:
+        condition: service_started
+      postgres:
+        condition: service_healthy
     networks:
       - platform-net
 
@@ -195,18 +201,25 @@ services:
     env_file:
       - .env
     environment:
-      DB_HOST: postgres
-      DB_PORT: 5432
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
       REDIS_HOST: redis
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
       SPRING_CLOUD_CONFIG_URI: http://config-service:8888
     ports:
       - "8082:8082"
     depends_on:
-      - discovery-service
-      - config-service
-      - postgres
-      - redis
+      discovery-service:
+        condition: service_started
+      config-service:
+        condition: service_started
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
     networks:
       - platform-net
 
@@ -218,16 +231,22 @@ services:
     env_file:
       - .env
     environment:
-      DB_HOST: postgres
-      DB_PORT: 5432
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
       SPRING_CLOUD_CONFIG_URI: http://config-service:8888
     ports:
       - "8083:8083"
     depends_on:
-      - discovery-service
-      - config-service
-      - postgres
+      discovery-service:
+        condition: service_started
+      config-service:
+        condition: service_started
+      postgres:
+        condition: service_healthy
     networks:
       - platform-net
 
@@ -239,16 +258,22 @@ services:
     env_file:
       - .env
     environment:
-      DB_HOST: postgres
-      DB_PORT: 5432
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
       SPRING_CLOUD_CONFIG_URI: http://config-service:8888
     ports:
       - "8084:8084"
     depends_on:
-      - discovery-service
-      - config-service
-      - postgres
+      discovery-service:
+        condition: service_started
+      config-service:
+        condition: service_started
+      postgres:
+        condition: service_healthy
     networks:
       - platform-net
 
@@ -260,16 +285,22 @@ services:
     env_file:
       - .env
     environment:
-      DB_HOST: postgres
-      DB_PORT: 5432
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
       SPRING_CLOUD_CONFIG_URI: http://config-service:8888
     ports:
       - "8085:8085"
     depends_on:
-      - discovery-service
-      - config-service
-      - postgres
+      discovery-service:
+        condition: service_started
+      config-service:
+        condition: service_started
+      postgres:
+        condition: service_healthy
     networks:
       - platform-net
 
@@ -281,16 +312,22 @@ services:
     env_file:
       - .env
     environment:
-      DB_HOST: postgres
-      DB_PORT: 5432
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
       SPRING_CLOUD_CONFIG_URI: http://config-service:8888
     ports:
       - "8086:8086"
     depends_on:
-      - discovery-service
-      - config-service
-      - postgres
+      discovery-service:
+        condition: service_started
+      config-service:
+        condition: service_started
+      postgres:
+        condition: service_healthy
     networks:
       - platform-net
 
@@ -302,16 +339,22 @@ services:
     env_file:
       - .env
     environment:
-      DB_HOST: postgres
-      DB_PORT: 5432
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
       SPRING_CLOUD_CONFIG_URI: http://config-service:8888
     ports:
       - "8087:8087"
     depends_on:
-      - discovery-service
-      - config-service
-      - postgres
+      discovery-service:
+        condition: service_started
+      config-service:
+        condition: service_started
+      postgres:
+        condition: service_healthy
     networks:
       - platform-net
 
@@ -323,16 +366,22 @@ services:
     env_file:
       - .env
     environment:
-      DB_HOST: postgres
-      DB_PORT: 5432
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
       SPRING_CLOUD_CONFIG_URI: http://config-service:8888
     ports:
       - "8088:8088"
     depends_on:
-      - discovery-service
-      - config-service
-      - postgres
+      discovery-service:
+        condition: service_started
+      config-service:
+        condition: service_started
+      postgres:
+        condition: service_healthy
     networks:
       - platform-net
 
@@ -344,16 +393,22 @@ services:
     env_file:
       - .env
     environment:
-      DB_HOST: postgres
-      DB_PORT: 5432
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
       SPRING_CLOUD_CONFIG_URI: http://config-service:8888
     ports:
       - "8089:8089"
     depends_on:
-      - discovery-service
-      - config-service
-      - postgres
+      discovery-service:
+        condition: service_started
+      config-service:
+        condition: service_started
+      postgres:
+        condition: service_healthy
     networks:
       - platform-net
 
@@ -365,16 +420,22 @@ services:
     env_file:
       - .env
     environment:
-      DB_HOST: postgres
-      DB_PORT: 5432
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
       SPRING_CLOUD_CONFIG_URI: http://config-service:8888
     ports:
       - "8090:8090"
     depends_on:
-      - discovery-service
-      - config-service
-      - postgres
+      discovery-service:
+        condition: service_started
+      config-service:
+        condition: service_started
+      postgres:
+        condition: service_healthy
     networks:
       - platform-net
 
@@ -386,18 +447,25 @@ services:
     env_file:
       - .env
     environment:
-      DB_HOST: postgres
-      DB_PORT: 5432
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
       EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://discovery-service:8761/eureka/
       SPRING_CLOUD_CONFIG_URI: http://config-service:8888
       SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9092
     ports:
       - "8091:8091"
     depends_on:
-      - discovery-service
-      - config-service
-      - postgres
-      - kafka
+      discovery-service:
+        condition: service_started
+      config-service:
+        condition: service_started
+      postgres:
+        condition: service_healthy
+      kafka:
+        condition: service_started
     networks:
       - platform-net
 

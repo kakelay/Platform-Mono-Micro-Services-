@@ -3,23 +3,20 @@
 This directory contains infrastructure-level configuration and initialization scripts for PostgreSQL containers used by the platform.
 
 ## Database ownership
-Each microservice should use its own PostgreSQL database and service-specific credentials.
+The platform currently uses one PostgreSQL container and one shared database:
 
-Example databases:
-- platform_auth_db
-- platform_user_db
-- platform_customer_db
-- platform_account_db
-- platform_transaction_db
-- platform_payment_db
-- platform_order_db
-- platform_notification_db
-- platform_document_db
-- platform_audit_db
-- platform_reporting_db
+- host: `postgres`
+- port: `5432`
+- database: `platform_master_db`
+- username: `platform_user`
+
+All persistence services connect with these values through `DB_HOST`,
+`DB_PORT`, `DB_NAME`, `DB_USERNAME`, and `DB_PASSWORD`.
 
 ## Initialization
-Place initialization SQL in `docker-entrypoint-initdb.d/` so the official PostgreSQL Docker image creates the databases and users at container startup.
+The official PostgreSQL Docker image creates the shared database and user from
+`POSTGRES_DB`, `POSTGRES_USER`, and `POSTGRES_PASSWORD`. The included
+initialization script intentionally creates no additional databases or roles.
 
 ## Migrations
 Each service should manage schema migrations with Flyway in `src/main/resources/db/migration/`.

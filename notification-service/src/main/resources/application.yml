@@ -4,9 +4,9 @@ spring:
   application:
     name: notification-service
   datasource:
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/platform_notification_db
-    username: ${DB_USERNAME:platform_notification_user}
-    password: ${DB_PASSWORD:platform_notification_password}
+    url: jdbc:postgresql://${DB_HOST:postgres}:${DB_PORT:5432}/${DB_NAME:platform_master_db}
+    username: ${DB_USERNAME:platform_user}
+    password: ${DB_PASSWORD}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -14,8 +14,12 @@ spring:
     properties:
       hibernate:
         format_sql: true
+        default_schema: notifications
   flyway:
     enabled: true
+    default-schema: notifications
+    schemas: notifications
+    create-schemas: true
     locations: classpath:db/migration
     baseline-on-migrate: true
 management:
