@@ -1,11 +1,12 @@
 ﻿spring:
   profiles: prod
-  redis:
-    host: ${REDIS_HOST:redis}
-    port: ${REDIS_PORT:6379}
   cloud:
     discovery:
       enabled: true
+  data:
+    redis:
+      host: ${REDIS_HOST:redis}
+      port: ${REDIS_PORT:6379}
 eureka:
   client:
     service-url:
